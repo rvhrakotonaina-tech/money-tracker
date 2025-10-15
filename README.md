@@ -12,12 +12,10 @@ A lightweight, single-page app to track earnings and spendings with charts and l
 - Charts (Chart.js): Monthly Income vs Expense, Expense by Category
 
 ## Quick Start
-1. Open `C:\Users\Venceslas Hyacinthe\CascadeProjects\money-tracker\index.html` in your browser.
-   - Optional: Use a local server (VS Code Live Server) for best experience.
-2. Click "Seed Sample" to populate demo data (optional).
-3. Add your transactions using the form.
-4. Filter and browse the list; use Prev/Next for pagination.
-5. Export data to JSON to back up; Import JSON to restore.
+1. Click "Seed Sample" to populate demo data (optional).
+2. Add your transactions using the form.
+3. Filter and browse the list; use Prev/Next for pagination.
+4. Export data to JSON to back up; Import JSON to restore.
 
 ## Data & Privacy
 - All data is stored locally in your browser via LocalStorage under key `money-tracker:v1`.
