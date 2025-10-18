@@ -150,15 +150,15 @@ function renderTable() {
       const signClass = t.type === "income" ? "text-emerald-600" : "text-rose-600";
       const typeLabel = t.type === "income" ? "Income" : "Expense";
       const amount = (t.type === "expense" ? -t.amount : t.amount);
-      return `<tr class="border-t border-slate-100">
+      return `<tr class="border-t border-slate-100 dark:border-slate-700">
         <td class="px-3 py-2">${t.date}</td>
-        <td class="px-3 py-2"><span class="px-2 py-1 text-xs rounded-full ${t.type === "income" ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"}">${typeLabel}</span></td>
+        <td class="px-3 py-2"><span class="px-2 py-1 text-xs rounded-full ${t.type === "income" ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300" : "bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-300"}">${typeLabel}</span></td>
         <td class="px-3 py-2">${t.category || "-"}</td>
         <td class="px-3 py-2 text-slate-600">${t.note || ""}</td>
         <td class="px-3 py-2 text-right font-medium ${signClass}">${currency(amount)}</td>
         <td class="px-3 py-2 text-right">
-          <button data-id="${t.id}" class="editTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white">Edit</button>
-          <button data-id="${t.id}" class="delTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white ml-1">Delete</button>
+          <button data-id="${t.id}" class="editTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white hover:bg-slate-50 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600">Edit</button>
+          <button data-id="${t.id}" class="delTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white ml-1 hover:bg-slate-50 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600">Delete</button>
         </td>
       </tr>`;
     })
