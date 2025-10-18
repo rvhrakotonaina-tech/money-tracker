@@ -10,6 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
@@ -31,17 +32,29 @@
       }
     }
   </script>
+  <script>
+    (function () {
+      try {
+        const s = JSON.parse(localStorage.getItem('money-tracker:settings') || '{}');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const useDark = s.theme ? s.theme === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', useDark);
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
+<body class="bg-slate-50 text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100">
   <div class="min-h-screen">
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-20">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-20 dark:bg-slate-800 dark:border-slate-700">
       <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-9 h-9 rounded-xl bg-brand-500 text-white grid place-content-center text-lg font-bold">₿</div>
           <h1 class="text-xl font-semibold">Money Tracker</h1>
         </div>
         <div class="flex items-center gap-2">
+          <button id="themeToggle" title="Toggle theme" class="px-3 py-2 text-sm font-medium bg-white border border-slate-200 rounded-lg hover:bg-slate-100 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600">🌞/🌙</button>
+          <span class="hidden sm:inline text-sm text-slate-500 dark:text-slate-300">Select your currency</span>
           <input id="currencyInput" value="USD" placeholder="Currency" title="Enter ISO currency code (e.g., USD, EUR, INR)" class="w-24 px-2 py-2 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-200" />
           <button id="exportJsonBtn" class="px-3 py-2 text-sm font-medium bg-slate-900 text-white rounded-lg hover:bg-slate-800">Export JSON</button>
           <label class="px-3 py-2 text-sm font-medium bg-white border border-slate-200 rounded-lg hover:bg-slate-100 cursor-pointer">
@@ -57,21 +70,21 @@
     <main class="max-w-6xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
       <section class="lg:col-span-2 space-y-6">
         <div class="grid grid-cols-3 gap-4">
-          <div class="bg-white border border-slate-200 rounded-xl p-4">
+          <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
             <div class="text-sm text-slate-500">Income</div>
             <div id="incomeTotal" class="mt-1 text-2xl font-semibold text-emerald-600">$0</div>
           </div>
-          <div class="bg-white border border-slate-200 rounded-xl p-4">
+          <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
             <div class="text-sm text-slate-500">Expenses</div>
             <div id="expenseTotal" class="mt-1 text-2xl font-semibold text-rose-600">$0</div>
           </div>
-          <div class="bg-white border border-slate-200 rounded-xl p-4">
+          <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
             <div class="text-sm text-slate-500">Balance</div>
             <div id="balanceTotal" class="mt-1 text-2xl font-semibold">$0</div>
           </div>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-4">
+        <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
           <h2 class="font-semibold mb-3">Add Transaction</h2>
           <form id="txForm" class="grid grid-cols-1 md:grid-cols-6 gap-3">
             <select id="txType" class="md:col-span-1 border-slate-200 rounded-lg">
@@ -89,7 +102,7 @@
           </form>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3">
+        <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-3 dark:bg-slate-800 dark:border-slate-700">
           <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
             <select id="filterType" class="border-slate-200 rounded-lg">
               <option value="all">All</option>
@@ -101,9 +114,9 @@
             <input id="filterTo" type="date" class="border-slate-200 rounded-lg" />
             <input id="filterSearch" type="text" placeholder="Search note" class="border-slate-200 rounded-lg" />
           </div>
-          <div class="overflow-hidden border border-slate-200 rounded-xl">
+          <div class="overflow-hidden border border-slate-200 rounded-xl dark:border-slate-700">
             <table class="w-full text-sm">
-              <thead class="bg-slate-50 text-slate-600">
+              <thead class="bg-slate-50 text-slate-600 dark:bg-slate-900/40 dark:text-slate-300">
                 <tr>
                   <th class="text-left px-3 py-2">Date</th>
                   <th class="text-left px-3 py-2">Type</th>
@@ -127,13 +140,13 @@
       </section>
 
       <aside class="space-y-6">
-        <div class="bg-white border border-slate-200 rounded-xl p-4">
+        <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
           <h2 class="font-semibold mb-3">Monthly Income vs Expense</h2>
           <div class="relative h-[280px]">
             <canvas id="monthlyChart" class="!w-full !h-full"></canvas>
           </div>
         </div>
-        <div class="bg-white border border-slate-200 rounded-xl p-4">
+        <div class="bg-white border border-slate-200 rounded-xl p-4 dark:bg-slate-800 dark:border-slate-700">
           <h2 class="font-semibold mb-3">Expense by Category</h2>
           <div class="relative h-[280px]">
             <canvas id="categoryChart" class="!w-full !h-full"></canvas>
