@@ -215,6 +215,10 @@ function renderCharts() {
   if (monthlyChart) monthlyChart.destroy();
   if (categoryChart) categoryChart.destroy();
 
+  const isDark = document.documentElement.classList.contains('dark');
+  const textColor = isDark ? '#cbd5e1' : '#475569';
+  const gridColor = isDark ? '#334155' : '#eef2f7';
+
   monthlyChart = new Chart(monthlyCtx, {
     type: "bar",
     data: {
@@ -238,10 +242,10 @@ function renderCharts() {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        x: { grid: { display: false } },
-        y: { grid: { color: "#eef2f7" } },
+        x: { grid: { color: gridColor, display: true }, ticks: { color: textColor } },
+        y: { grid: { color: gridColor }, ticks: { color: textColor } },
       },
-      plugins: { legend: { display: true } },
+      plugins: { legend: { display: true, labels: { color: textColor } } },
     },
   });
 
@@ -270,7 +274,7 @@ function renderCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { position: "bottom" } },
+      plugins: { legend: { position: "bottom", labels: { color: textColor } } },
     },
   });
 }
