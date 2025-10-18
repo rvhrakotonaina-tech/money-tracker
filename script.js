@@ -6,6 +6,7 @@ const pageSize = 10;
 let monthlyChart;
 let categoryChart;
 let selectedCurrency = "USD";
+let selectedTheme = "light";
 
 const el = (id) => document.getElementById(id);
 const incomeTotalEl = el("incomeTotal");
@@ -32,6 +33,7 @@ const importJsonInput = el("importJsonInput");
 const seedBtn = el("seedBtn");
 const resetBtn = el("resetBtn");
 const currencyInput = el("currencyInput");
+const themeToggle = el("themeToggle");
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
@@ -56,7 +58,7 @@ function currency(n) {
 }
 
 function saveSettings() {
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify({ currency: selectedCurrency }));
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify({ currency: selectedCurrency, theme: selectedTheme }));
 }
 
 function loadSettings() {
@@ -64,8 +66,12 @@ function loadSettings() {
     const raw = localStorage.getItem(SETTINGS_KEY);
     const s = raw ? JSON.parse(raw) : {};
     selectedCurrency = (s.currency || "USD").toUpperCase();
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    selectedTheme = s.theme ? (s.theme === 'dark' ? 'dark' : 'light') : (prefersDark ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', selectedTheme === 'dark');
   } catch {
     selectedCurrency = "USD";
+    selectedTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
   }
 }
 
@@ -458,6 +464,14 @@ function initEvents() {
         alert("Invalid currency code. Use a valid ISO 4217 code, e.g., USD, EUR, INR.");
         currencyInput.value = prev;
       }
+    });
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      selectedTheme = selectedTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.toggle('dark', selectedTheme === 'dark');
+      saveSettings();
     });
   }
 }
