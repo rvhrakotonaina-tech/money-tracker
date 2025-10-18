@@ -157,8 +157,8 @@ function renderTable() {
         <td class="px-3 py-2 text-slate-600">${t.note || ""}</td>
         <td class="px-3 py-2 text-right font-medium ${signClass}">${currency(amount)}</td>
         <td class="px-3 py-2 text-right">
-          <button data-id="${t.id}" class="editTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white hover:bg-slate-50 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600">Edit</button>
-          <button data-id="${t.id}" class="delTx px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white ml-1 hover:bg-slate-50 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600">Delete</button>
+          <button data-id="${t.id}" class="editTx px-2 py-1 text-xs font-medium border border-slate-200 rounded-lg bg-white hover:bg-slate-50 shadow-sm dark:bg-slate-600 dark:text-white dark:border-slate-500 dark:hover:bg-slate-500">Edit</button>
+          <button data-id="${t.id}" class="delTx px-2 py-1 text-xs font-medium border border-slate-200 rounded-lg bg-white ml-1 hover:bg-slate-50 shadow-sm dark:bg-rose-600 dark:text-white dark:border-rose-500 dark:hover:bg-rose-500">Delete</button>
         </td>
       </tr>`;
     })
